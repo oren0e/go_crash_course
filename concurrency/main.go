@@ -25,12 +25,13 @@ func main() {
 	// which gives us enough time for the go-routine to spwan off from the main function and that's
 	// what is responsible for printing the message.
 	// we can also do it like this with a closure.
+
 	// It is generally not advised to access a varaible that's defined in the outer scope of a function
 	// inside the function, especially with go-routines which can lead to race conditions like so:
 	var msg = "Hello"
-	go func() {
+	go func(msg string) {
 		fmt.Println(msg)
-	}()
+	}(msg)
 	msg = "Goodbye"
 	time.Sleep(100 * time.Millisecond)
 	// Most of the time we will see "Goodbye" printed here, because the go scheduler will not interupt
