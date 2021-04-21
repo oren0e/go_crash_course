@@ -21,7 +21,9 @@ var m = sync.RWMutex{} // Read-Write mutex
 func main() {
 	for i := 0; i < 10; i++ {
 		wg.Add(2)
+		m.RLock()
 		go sayHello()
+		m.Lock()
 		go increment()
 	}
 	wg.Wait()
@@ -29,14 +31,14 @@ func main() {
 
 // try to protect the counter from reading and writing at the same time
 func sayHello() {
-	m.RLock() // locks for reading.
+	//m.RLock() // locks for reading.
 	fmt.Printf("Hello #%v\n", counter)
 	m.RUnlock()
 	wg.Done()
 }
 
 func increment() {
-	m.Lock() // locks for writing.
+	//m.Lock() // locks for writing.
 	counter++
 	m.Unlock()
 	wg.Done()
