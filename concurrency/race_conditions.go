@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"runtime"
 	"sync"
 )
 
@@ -19,6 +20,7 @@ var m = sync.RWMutex{} // Read-Write mutex
 // then we can't write to it at all. So we can have an infinite number of readers but only one writer.
 
 func main() {
+	fmt.Printf("Threads %v\n", runtime.GOMAXPROCS(-1)) // number of maximum threads you have on your system (number of cores)
 	for i := 0; i < 10; i++ {
 		wg.Add(2)
 		m.RLock()
