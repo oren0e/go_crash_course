@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type UserError int
 
@@ -17,7 +20,35 @@ func (err UserError) String() string {
 					}[err]
 }
 
+type UserErrorString string
+
+const (
+	IncorrectNameString UserErrorString = "Bad username, try again"
+	IncorrectPasswordString = "Wrong password, did you forget it?"
+	InvalidEmailString = "Invalid email address, should be user@domain.com"
+)
+
+func (err UserErrorString) String() string {
+	errors := []string{"Bad username, try again",
+	"Wrong password, did you forget it?",
+	"Invalid email address, should be user@domain.com",
+	}
+
+	x := string(err)
+	for _, v := range errors {
+		if v == x {
+			return x
+		}
+	}
+	return ""
+}
+
 func main() {
-	var myErr UserError = InvalidEmail
-	fmt.Println(myErr)
+	var myErr UserError
+	var myErrString UserErrorString
+	myErrString = "Invalid email address, should be user@domain.com"
+	if strings.Contains(string(myErrString), "address") {
+		fmt.Println("It is an email error!")
+	}
+	fmt.Println(myErr) // prints "Invalid email address, should be user@domain.com"
 }
