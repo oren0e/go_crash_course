@@ -24,8 +24,8 @@ type UserErrorString string
 
 const (
 	IncorrectNameString UserErrorString = "Bad username, try again"
-	IncorrectPasswordString = "Wrong password, did you forget it?"
-	InvalidEmailString = "Invalid email address, should be user@domain.com"
+	IncorrectPasswordString UserErrorString = "Wrong password, did you forget it?"
+	InvalidEmailString UserErrorString = "Invalid email address, should be user@domain.com"
 )
 
 func (err UserErrorString) String() string {
@@ -45,8 +45,7 @@ func (err UserErrorString) String() string {
 
 func main() {
 	var myErr UserError
-	var myErrString UserErrorString
-	myErrString = "Invalid email address, should be user@domain.com"
+	myErrString := "Invalid email address, should be user@domain.com"
 	if strings.Contains(string(myErrString), "address") {
 		fmt.Println("It is an email error!")
 	}
